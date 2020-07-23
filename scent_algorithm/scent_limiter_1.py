@@ -23,22 +23,22 @@ class Scent:
             for index, spray_slot in enumerate(self.spray_slots):
                 if time.time() - self.start_time >= spray_slot:
                     # Update activated spray_slot wait time
-                    self.spray_slots[index] = (time.time() - self.start_time) + self.spray_slot_wait_time  
+                    self.spray_slots[index] = round( ( (time.time() - self.start_time) + self.spray_slot_wait_time),2 )
                     # Update universal_wait value
                     self.universal_wait = (time.time() - self.start_time) + self.universal_wait_time
                     # # Found and activated a spray slot so return out of function
-                    print("Spray from slot ",index) 
+                    print("Spray from slot {} activated".format(index)) 
                     return 
                 else: # This spray slot unavailable
                     print("{:.2f} seconds away from slot {}".format(spray_slot - (time.time() - self.start_time),index))
             print("no available spray slot ")      
         else:
-            print("Global wait prevented this spray {:.2f} seconds until you can activate again".format( self.universal_wait - (time.time() - self.start_time) ) )
+            print("Global wait prevented this spray - {:.2f} seconds until you can activate again".format( self.universal_wait - (time.time() - self.start_time) ) )
 
 def on_release(key):
     if key == Key.space:
         scent.spray()
-        print("{:.2f}".format(scent.spray_slots))
+        print("{} Current Time: {:.2f}\n".format(scent.spray_slots, (time.time() - scent.start_time) ))
     if key == Key.esc:                
         # Stop listener
         return False
