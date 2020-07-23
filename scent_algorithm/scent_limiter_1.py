@@ -38,14 +38,17 @@ class Scent:
 def on_release(key):
     if key == Key.space:
         scent.spray()
-        print()
+        print("{:.2f}".format(scent.spray_slots))
     if key == Key.esc:                
         # Stop listener
         return False
 
 scent = Scent(5, 5, 60)
-
-# Collect events until released
+print( "Press 'space' to attempt a spray\n"
+ "Press 'esc' to exit\n"
+ "5 Spray slots, a slot cannot be activated again until {spray_slot_wait_time} after it has been last activated\n"
+ "no spray slots are checked until {universal_wait_time} after the last spray slot was activated)\n")
+ 
 with Listener(
         on_release=on_release) as listener:
     listener.join()
